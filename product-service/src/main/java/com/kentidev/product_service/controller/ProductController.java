@@ -26,9 +26,9 @@ public class ProductController {
   }
 
   @PostMapping
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void addProduct(@RequestBody ProductReq productReq) {
-    productService.saveProduct(productReq);
+  @ResponseStatus(HttpStatus.CREATED)
+  public ProductRes addProduct(@RequestBody ProductReq productReq) {
+    return productService.saveProduct(productReq);
   }
 
 

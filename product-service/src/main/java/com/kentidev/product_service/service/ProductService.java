@@ -18,8 +18,8 @@ public class ProductService {
     return productRepo.findAll().stream().map(productMapper::toProductRes).toList();
   }
 
-  public void saveProduct(ProductReq productReq){
-    productRepo.save(productMapper.toProduct(productReq));
+  public ProductRes saveProduct(ProductReq productReq){
+    return productMapper.toProductRes(productRepo.save(productMapper.toProduct(productReq)));
   }
 
 
