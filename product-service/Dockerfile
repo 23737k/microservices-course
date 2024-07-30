@@ -1,7 +1,7 @@
 FROM maven:3.9.3-eclipse-temurin-17-alpine AS builder
 WORKDIR build
 COPY . .
-RUN mvn clean install -Dskiptests
+RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:17.0.4.1_1-jre AS layers
 WORKDIR layer
