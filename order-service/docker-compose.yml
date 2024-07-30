@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_DB: order-service
+      POSTGRES_USER: kenti
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    expose:
+      - "5431"
+    ports:
+      - "5431:5431"
+    command: -p 5431
+    networks:
+      - order-service
+
+  order-service:
+    build: .
+    container_name: order-service
+    depends_on:
+      - postgres
+    ports:
+      - '8081:8081'
+    networks:
+      - order-service
+volumes:
+  postgres:
+networks:
+  order-service:
