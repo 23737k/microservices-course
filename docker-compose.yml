@@ -1,0 +1,88 @@
+services:
+  mongodb:
+    image: mongo:7.0.5
+    container_name: mongodb
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: product-service
+    volumes:
+      - mongodb:/data/db
+    networks:
+      services-network:
+
+  product-service:
+    build: /product-service
+    container_name: product-service
+    links:
+      - mongodb
+    ports:
+      - '8080:8080'
+    networks:
+      services-network:
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    networks:
+      services-network:
+
+  inventory-service:
+    build: /inventory-service
+    ports:
+      - '8082:8082'
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_USER: root
+      DATABASE_PASSWORD: ''
+      DATABASE_NAME: inventory_service
+      DATABASE_PORT: 3306
+    networks:
+      services-network:
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_DB: order-service
+      POSTGRES_USER: kenti
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    expose:
+      - "5431"
+    ports:
+      - "5431:5431"
+    command: -p 5431
+    networks:
+      services-network:
+
+  order-service:
+    build: /order-service
+    container_name: order-service
+    depends_on:
+      - postgres
+    ports:
+      - '8081:8081'
+    networks:
+      services-network:
+
+
+networks:
+  services-network:
+
+volumes:
+  mongodb:
+  mysql:
+  postgres:
