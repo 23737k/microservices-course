@@ -4,3 +4,10 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:password@mongodb:27017/product-service?authSource=admin
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://discovery-server:8761/eureka  # localhost o nombre del contenedor : 8761 / eureka

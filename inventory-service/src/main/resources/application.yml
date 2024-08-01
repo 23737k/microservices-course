@@ -14,3 +14,8 @@ spring:
 server:
   port: 8082
 
+eureka:
+  client:
+    service-url:
+      default-zone: http://discovery-server:8761/eureka  # localhost o nombre del contenedor : 8761 / eureka
+

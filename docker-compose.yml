@@ -83,6 +83,14 @@ services:
     networks:
       services-network:
 
+  discovery-server:
+    build: /discovery-server
+    container_name: discovery-server
+    ports:
+      - '8761:8761'
+    networks:
+      services-network:
+
 
 networks:
   services-network:
