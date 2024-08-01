@@ -16,7 +16,8 @@ services:
   product-service:
     build: /product-service
     container_name: product-service
-    links:
+    restart: on-failure
+    depends_on:
       - mongodb
     ports:
       - '8080:8080'
@@ -36,9 +37,11 @@ services:
       services-network:
 
   inventory-service:
+    container_name: inventory-service
     build: /inventory-service
     ports:
       - '8082:8082'
+    restart: on-failure
     depends_on:
       - mysql
     environment:
@@ -71,8 +74,10 @@ services:
   order-service:
     build: /order-service
     container_name: order-service
+    restart: on-failure
     depends_on:
       - postgres
+
     ports:
       - '8081:8081'
     networks:

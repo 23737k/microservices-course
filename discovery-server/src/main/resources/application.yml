@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: discovery-server
+#Eureka Config
+eureka:
+  instance:
+    hostname: discovery-server #Aqui va el nombre del contenedor o localhost si no se utiliza Docker
+  client:
+    register-with-eureka: false   #Con esto le indicamos que esta instancia de servicio no debe registrarse en el discovery-server, ya que el discovery-server no se va a registrar a si mismo
+    fetch-registry: false   #Indica si queremos traernos el registro de servicios del discovery-server
+server:
+  port: 8761  #puerto por defecto de Eureka server
