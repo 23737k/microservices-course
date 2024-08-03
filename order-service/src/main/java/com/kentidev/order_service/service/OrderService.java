@@ -18,7 +18,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class OrderService {
   private final OrderRepo orderRepo;
   private final OrderMapper orderMapper;
-  private final WebClient webClient;
+  private final WebClient.Builder webClientBuilder;
 
   public OrderRes saveOrder(OrderReq orderReq){
     Order order = new Order();
@@ -28,8 +28,8 @@ public class OrderService {
     //Call Inventory Service and save order if its products are in stock
     List<String> skuCodes = orderReq.getOrderLineItems().stream().map(OrderLineItemReq::getSkuCode).toList();
 
-    InventoryResponse[] result =  webClient.get()
-        .uri("http://inventory-service:8082/api/inventory",
+    InventoryResponse[] result =  webClientBuilder.build().get()
+        .uri("http://inventory-service/api/inventory",
             uriBuilder -> uriBuilder.queryParam("skuCodes", skuCodes).build())
         .retrieve()
         .bodyToMono(InventoryResponse[].class)

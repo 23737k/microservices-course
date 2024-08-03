@@ -14,5 +14,5 @@ COPY --from=layers layer/dependencies/ ./
 COPY --from=layers layer/spring-boot-loader/ ./
 COPY --from=layers layer/snapshot-dependencies/ ./
 COPY --from=layers layer/application/ ./
-EXPOSE 8080
+EXPOSE 8761
 ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
