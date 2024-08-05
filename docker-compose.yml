@@ -94,6 +94,16 @@ services:
     networks:
       services-network:
 
+  api-gateway:
+    depends_on:
+      - discovery-server
+    ports:
+      - 9000:9000
+    container_name: api-gateway
+    networks:
+      - services-network
+    build: /api-gateway
+
 
 networks:
   services-network:
