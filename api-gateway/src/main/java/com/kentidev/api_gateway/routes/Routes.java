@@ -21,6 +21,7 @@ public class Routes {
         )
         .filter(lb("product-service"))
         .build();
+
   }
 
   @Bean
