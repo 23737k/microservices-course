@@ -10,22 +10,9 @@
 	</parent>
 	<groupId>com.kentidev</groupId>
 	<artifactId>microservices-parent</artifactId>
+	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>microservices-parent</name>
-	<description>Microservices Demo Project</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 	<modules>
 		<module>product-service</module>
 	</modules>
