@@ -11,3 +11,9 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery-server:8761/eureka  # localhost o nombre del contenedor : 8761 / eureka
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
