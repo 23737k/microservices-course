@@ -1,8 +1,10 @@
 package com.kentidev.api_gateway.routes;
 
+import static org.springframework.cloud.gateway.server.mvc.filter.FilterFunctions.setPath;
 import static org.springframework.cloud.gateway.server.mvc.filter.LoadBalancerFilterFunctions.lb;
 import static org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions.http;
 import static org.springframework.web.servlet.function.RouterFunctions.route;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.function.RouterFunction;
@@ -48,6 +50,38 @@ public class Routes {
    Este filtro lb resuelve el nombre del servicio registrado y distribuye la carga entre las instancias disponibles.
   * */
 
+  @Bean
+  RouterFunction<ServerResponse> inventoryServiceSwagger() {
+    return route()
+        .path("/aggregate/inventory-service/v3/api-docs" , builder -> builder
+            .GET(http())
+        )
+        .filter(setPath("/api-docs"))
+        .filter(lb("inventory-service"))
+        .build();
+  }
+
+  @Bean
+  RouterFunction<ServerResponse> orderServiceSwagger() {
+    return route()
+        .path("/aggregate/order-service/v3/api-docs" , builder -> builder
+            .GET(http())
+        )
+        .filter(setPath("/api-docs"))
+        .filter(lb("order-service"))
+        .build();
+  }
+
+  @Bean
+  RouterFunction<ServerResponse> productServiceSwagger() {
+    return route()
+        .path("/aggregate/product-service/v3/api-docs" , builder -> builder
+            .GET(http())
+        )
+        .filter(setPath("/api-docs"))
+        .filter(lb("product-service"))
+        .build();
+  }
 
 
 }
