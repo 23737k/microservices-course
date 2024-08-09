@@ -7,14 +7,16 @@ spring:
         jwt:
           issuer-uri: http://host.docker.internal:8181/realms/microservices-course-realm
 
+server:
+  port: 0
 
+#Eureka Client
 eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery-server:8761/eureka
-server:
-  port: 9000
 
+#Springdoc OpenApi
 springdoc:
   swagger-ui:
     urls:
@@ -24,6 +26,41 @@ springdoc:
         url: /aggregate/order-service/v3/api-docs
       - name: Product Service
         url: /aggregate/product-service/v3/api-docs
-
   api-docs:
     path: /v3/api-docs
+
+#Resilience4J: CircuitBreaker, Retry and TimeLimiter
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+        minimum-number-of-calls: 5
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 3s
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration: 2s
+
+#Actuator
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
